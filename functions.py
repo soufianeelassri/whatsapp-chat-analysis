@@ -1,4 +1,5 @@
 from urlextract import URLExtract
+import pandas as pd
 
 extract = URLExtract()
 
@@ -19,3 +20,16 @@ def basic_stats(df):
     links_shared = df['message'].apply(lambda x: extract.find_urls(x)).explode().dropna().unique()
 
     return total_messages, len(total_words), media_shared, len(links_shared)
+
+def monthly_timeline(df):
+
+    timeline = df.groupby(['year', 'month_num', 'month']).count()['message'].reset_index()
+
+    time = []
+    for i in range(timeline.shape[0]):
+        time.append(timeline['month'][i] + "-" + str(timeline['year'][i]))
+        print(time)
+
+    timeline['time'] = time
+
+    return timeline

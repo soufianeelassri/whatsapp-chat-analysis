@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
 </head>
 <body>
-    <h1>Overall Bsic Statistics</h1>
+    <h1>Overall Basic Statistics</h1>
     <p>Total Messages: {{ total_messages }}</p>
     <p>Total Words: {{ total_words }}</p>
     <p>Media Shared: {{ media_shared }}</p>
     <p>Links Shared: {{ link_shared }}</p>
+
+    <h1>Monthly Timeline</h1>
+    <img src="{{ plot_filename }}" alt="Monthly Timeline Plot">
 </body>
 </html>
