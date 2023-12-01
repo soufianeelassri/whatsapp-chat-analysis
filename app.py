@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import preprocessing
-import helper
+import functions
 
 app = Flask(__name__)
 
@@ -15,20 +15,15 @@ def analyze():
         bytes_data = uploaded_file.read()
         data = bytes_data.decode("utf-8")
         df = preprocessing.preprocessing(data)
-
-        #fetch unique users
-        user_list = df['user'].unique().tolist()
-        user_list.remove('group notification')
-        user_list.sort()
         
-        num_messages, num_words, num_media_messages, num_links = helper.fetch_stats(df)
+        total_messages, total_words, media_shared, link_shared = functions.basic_stats(df)
 
         return render_template(
                 'results.html',
-                num_messages=num_messages,
-                num_words=num_words,
-                num_media_messages=num_media_messages,
-                num_links=num_links
+                total_messages = total_messages,
+                total_words = total_words,
+                media_shared = media_shared,
+                link_shared = link_shared
             )
 
 if __name__ == '__main__':
