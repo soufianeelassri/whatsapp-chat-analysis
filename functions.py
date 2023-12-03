@@ -28,8 +28,23 @@ def monthly_timeline(df):
     time = []
     for i in range(timeline.shape[0]):
         time.append(timeline['month'][i] + "-" + str(timeline['year'][i]))
-        print(time)
 
     timeline['time'] = time
+
+    return timeline
+
+def daily_timeline(df):
+
+    timeline = df.groupby('only_date').count()['message'].reset_index()
+
+    return timeline
+
+def most_busy_days(df):
+
+    timeline = df.groupby('day_name').count()['message'].reset_index()
+
+    custom_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    timeline['day_name'] = pd.Categorical(timeline['day_name'], categories=custom_order, ordered=True)
+    timeline = timeline.sort_values(by='day_name')
 
     return timeline
